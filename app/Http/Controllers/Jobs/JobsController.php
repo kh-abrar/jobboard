@@ -13,6 +13,17 @@ class JobsController extends Controller
 
         $job =Job::find($id);
 
-        return view('jobs.single', compact('job'));
+        //Getting related Jobs
+
+        $relatedJob = Job::where('category', $job->category)
+        ->where('id', '!=', $id)
+        ->take(5)
+        ->get();
+
+        $relatedJobCount = Job::where('category', $job->category)
+        ->where('id', '!=', $id)
+        ->count();
+
+        return view('jobs.single', compact('job', 'relatedJob', 'relatedJobCount'));
     }
 }
