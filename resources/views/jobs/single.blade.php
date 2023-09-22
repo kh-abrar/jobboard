@@ -16,7 +16,14 @@
           </div>
         </div>
       </section>
-  
+
+      <div class="container">
+        @if(\Session::has('save'))
+          <div class="alert alert-success">
+              <p>{!! \Session::get('save') !!}</p>
+          </div>
+        @endif
+      </div>
       
       <section class="site-section">
         <div class="container">
@@ -63,7 +70,23 @@
   
               <div class="row mb-5">
                 <div class="col-6">
-                  <button class="btn btn-block btn-light btn-md"><i class="icon-heart"></i>Save Job</button>
+                  <form action="{{route('save.job')}}" method="POST">
+                    @csrf
+                    <input name="job_id" type="hidden" value="{{$job->id}}">
+                    <input name="user_id" type="hidden" value="{{Auth::user()->id}}">
+                    <input name="job_image" type="hidden" value="{{$job->image}}">
+                    <input name="job_title" type="hidden" value="{{$job->job_title}}">
+                    <input name="job_region" type="hidden" value="{{$job->job_region}}">
+                    <input name="job_type" type="hidden" value="{{$job->job_type}}">
+                    <input name="company" type="hidden" value="{{$job->company}}">
+                  
+                  @if ($savedJob > 0)
+                    <button class="btn btn-block btn-success btn-md" disabled>Saved Already</button>
+                  @else
+                    <button name="submit" type="submit" class="btn btn-block btn-light btn-md">Save Job</button>
+                  @endif
+
+                  
                   <!--add text-danger to it to make it read-->
                 </div>
                 <div class="col-6">
