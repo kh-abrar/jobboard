@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Job\Job;
 use App\Models\Job\JobSaved;
 use App\Models\Job\Application;
+use App\Models\Category\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -33,7 +34,14 @@ class JobsController extends Controller
         ->where('user_id', Auth::user()->id)
         ->count();
 
-        return view('jobs.single', compact('job', 'relatedJob', 'relatedJobCount', 'savedJob'));
+        // Verifying if user applied to a job
+        $appliedJob = Application::where('user_id', Auth::user()->id)
+        ->where('job_id', $id)
+        ->count();
+
+        $categories = Category::all();
+
+        return view('jobs.single', compact('job', 'relatedJob', 'relatedJobCount', 'savedJob', 'appliedJob', 'categories'));
     }
 
     public function saveJob(Request $request){
@@ -71,7 +79,6 @@ class JobsController extends Controller
             if($applyJob){
                 return redirect('/jobs/single/'.$request->job_id.'')->with('applied', 'You applied to this job successfully!');
             }
-        }
-        
+        } 
     }
 }
