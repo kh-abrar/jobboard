@@ -43,6 +43,10 @@
                   <input type="file" name="cv" class="form-control">
                 </div>
 
+                @if ($error->has('cv'))
+                <p class="alert alert-success">{{$error->first('cv')}}</p>  
+                @endif
+
 
                 <div class="col-lg-4 ml-auto">
                     <div class="row">  

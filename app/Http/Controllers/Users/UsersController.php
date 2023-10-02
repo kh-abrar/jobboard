@@ -41,8 +41,17 @@ class UsersController extends Controller
     }
 
     public function updateDetails(Request $request){
-        $userDetailsUpdate = User::find(Auth::user()->id);
 
+        Request()->validate([
+            "name" => "required|max:40",
+            "job_title" => "required|max:40",
+            "bio" => "required",
+            "facebook" => "required|max:140", 
+            "twitter" => "required|max:140",
+            "linkedin" => "required|max:140",
+        ]);
+
+        $userDetailsUpdate = User::find(Auth::user()->id);
         $userDetailsUpdate->update([
             "name" => $request->name,
             "job_title" => $request->job_title,
@@ -64,6 +73,10 @@ class UsersController extends Controller
 
 
     public function updateCV(Request $request){
+
+        Request()->validate([
+            "cv" => "required"
+        ]);
 
         $oldCV = User::find(Auth::user()->id);
         
