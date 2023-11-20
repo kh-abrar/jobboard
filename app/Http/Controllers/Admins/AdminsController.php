@@ -76,4 +76,48 @@ class AdminsController extends Controller
 
         return view ("admins.display-categories", compact("categories"));
     }
+
+    public function createCategories(){
+
+       
+
+        return view ("admins.create-categories");
+    }
+
+    public function storeCategories(Request $request){
+
+        Request()->validate([
+            "name" => "required|max:40",
+        ]);
+
+        $createCategory = Category::create([
+            'name' => $request->name,
+        ]);
+
+        if($createCategory){
+            return redirect('admin/display-categories/')->with('create', 'Category Created Successfully');
+        }
+    }
+
+    public function editCategories($id){
+        $category = Category::find($id);
+
+        return view("admins.edit-categories", compact("category"));
+    }
+
+    public function updateCategories(Request $request, $id){
+        Request()->validate([
+            "name" => "required|max:40",
+
+        ]);
+
+        $categoryUpdate = Category::find( $id );
+        $categoryUpdate->update([
+            "name" => $request->name,
+        ]);
+
+        if($categoryUpdate){
+            return redirect('/admin/display-categories')->with('update', 'Category updated Succesfully Updated');
+        }
+    }
 }
