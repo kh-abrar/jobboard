@@ -9,6 +9,7 @@ use App\Models\Admin\Admin;
 use App\Models\Job\Application;
 use App\Models\Job\Job;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\File;
 
 class AdminsController extends Controller
 {
@@ -146,9 +147,21 @@ class AdminsController extends Controller
 
     public function storeJobs(Request $request){
         // Request()->validate([
-        //     "name" => "required|max:40",
-        //     "email" => "required|max:40",
-        //     "password" => "required",
+        //     "job_title" => "required|max:40",
+        //     "job_region" => "required|max:40",
+        //     "company" => "required",
+        //     "job_type" => "required",
+        //     "vacancy" => "required",
+        //     "experience" => "required",
+        //     "salary" => "required",
+        //     "Gender" => "required",
+        //     "application_deadline" => "required",
+        //     "jobdescription" => "required",
+        //     "responsibilities" => "required",
+        //     "education_experience" => "required",
+        //     "otherbenefits" => "required",
+        //     "category" => "required",
+        //     "image"=> "image",
         // ]);
 
         $destinationPath = 'assets/images/';
@@ -176,6 +189,19 @@ class AdminsController extends Controller
 
         if($createJobs){
             return redirect('admin/display-jobs/')->with('create', 'Job Created Successfully');
+        }
+    }
+
+    public function deleteJobs($id){
+        $deleteJob = Job::find($id);
+
+
+        if(File::exists(public_path('assets/images/' . $deleteJob->image))){
+            File::delete(public_path('assets/images/' . $deleteJob->cv));
+        }
+        $deleteJob->delete();
+        if($deleteJob){
+        return redirect('admin/display-jobs/')->with('delete','Job deleted successfully');
         }
     }
 }

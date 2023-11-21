@@ -83,14 +83,12 @@
                 <textarea name="job_description" id="" cols="30" rows="7" class="form-control" placeholder="Write Job Description..."></textarea>
               </div>
             </div>
-
             <div class="row form-group">
               <div class="col-md-12">
                 <label class="text-black" for="">Responsibilities</label> 
                 <textarea name="responsibilities" id="" cols="30" rows="7" class="form-control" placeholder="Write Responsibilities..."></textarea>
               </div>
             </div>
-
             <div class="row form-group">
               <div class="col-md-12">
                 <label class="text-black" for="">Education & Experience</label> 
