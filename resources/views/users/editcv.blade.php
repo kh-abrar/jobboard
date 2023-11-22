@@ -43,7 +43,7 @@
                   <input type="file" name="cv" class="form-control">
                 </div>
 
-                @if ($error->has('cv'))
+                @if ($errors->has('cv'))
                 <p class="alert alert-success">{{$error->first('cv')}}</p>  
                 @endif
 
