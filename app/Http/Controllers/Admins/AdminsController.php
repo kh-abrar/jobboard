@@ -204,4 +204,10 @@ class AdminsController extends Controller
         return redirect('admin/display-jobs/')->with('delete','Job deleted successfully');
         }
     }
+
+    // Applications
+    public function displayApps(){
+        $displayApps = Application::all();
+        return view('admins.all-apps', compact('displayApps'));
+    }
 }
