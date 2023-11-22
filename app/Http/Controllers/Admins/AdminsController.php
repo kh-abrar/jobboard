@@ -210,4 +210,12 @@ class AdminsController extends Controller
         $displayApps = Application::all();
         return view('admins.all-apps', compact('displayApps'));
     }
+    public function deleteApps($id){
+        $deleteJob = Application::find($id);
+        $deleteJob->delete();
+
+        if($deleteJob){
+            return redirect('admin/display-apps/')->with('delete','Application deleted successfully');
+        }
+    }
 }

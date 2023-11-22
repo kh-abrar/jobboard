@@ -4,6 +4,11 @@
     <div class="col">
       <div class="card">
         <div class="card-body">
+            @if(\Session::has('delete'))
+            <div class="alert alert-success">
+                <p>{!! \Session::get('delete') !!}</p>
+            </div>
+          @endif
           <h5 class="card-title mb-4 d-inline">Job Applications</h5>
 
           <table class="table">
@@ -27,7 +32,7 @@
                     <td><a class="btn btn-success" href="{{route('single.job', $displayApp->job_id)}}">Go To Job</a></td>
                     <td>{{$displayApp->job_title}}</td>
                      <td>{{$displayApp->company}}</td>
-                     <td><a href="#" class="btn btn-danger  text-center ">Delete</a></td>
+                     <td><a href="{{route('delete.apps', $displayApp->id)}}" class="btn btn-danger  text-center ">Delete</a></td>
                   </tr>
                 @endforeach
               
