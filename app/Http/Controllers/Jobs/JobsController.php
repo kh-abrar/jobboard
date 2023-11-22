@@ -10,6 +10,7 @@ use App\Models\Category\Category;
 use App\Models\Job\Search;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class JobsController extends Controller
 {
@@ -29,7 +30,11 @@ class JobsController extends Controller
         ->where('id', '!=', $id)
         ->count();
 
-        $categories = Category::all();
+        $categories = DB::table('categories')
+        ->join('jobs','jobs.category','=','categories.name')
+        ->select('categories.name AS name', 'categories.id AS id', DB::raw('COUNT(jobs.category) AS total'))
+        ->groupBy('jobs.category')
+        ->get();
 
         //Save Job
         if(auth()->user()){
@@ -68,7 +73,7 @@ class JobsController extends Controller
 
     public function jobApply(Request $request){
 
-        if($request->cv == 'No CV'){
+        if(Auth::user()->cv == 'No CV'){
             return redirect('/jobs/single/'.$request->job_id.'')->with('apply', 'Upload your CV first in the profile page');
         }else{
             $applyJob = Application::create([
